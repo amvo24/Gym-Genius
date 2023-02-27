@@ -9,3 +9,6 @@ class Workout(models.Model):
     reps = models.IntegerField()
     exercises = models.ManyToManyField(Exercise, related_name='workouts')
     muscles_worked = models.ManyToManyField(Muscle, related_name='workouts')
+
+    def __str__(self):
+        return self.name
