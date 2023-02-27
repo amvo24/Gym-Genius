@@ -2,8 +2,8 @@ from django.db import models
 
 # Create your models here.
 class Exercise(models.Model):
-    name = models.CharField()
-    description = models.TextField()
+    name = models.CharField(max_length=255)
+    description = models.TextField(max_length=255)
     p_p_l = models.TextField()
     muscles = models.ManyToManyField('Muscle', related_name='exercises')
 
@@ -11,4 +11,4 @@ class Exercise(models.Model):
 
 
 class Muscle(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=255)
