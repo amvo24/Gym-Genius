@@ -5,6 +5,7 @@ class Exercise(models.Model):
     name = models.CharField()
     description = models.TextField()
     p_p_l = models.TextField()
+    muscles = models.ForeignKey(Muscle, )
 
 
 
