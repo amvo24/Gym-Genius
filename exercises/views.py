@@ -20,7 +20,7 @@ def create_exercise(request):
         return JsonResponse({'status': 'error'})
 
 @csrf_exempt
-def read_exercise(request, id):
+def get_exercise(request, id):
     try:
         exercise = Exercise.objects.get(id=id)
         data = {'id': exercise.id, 'name': exercise.name, 'description': exercise.description, 'muscles': [muscle.name for muscle in exercise.muscles.all()]}
