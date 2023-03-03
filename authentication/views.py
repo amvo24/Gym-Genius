@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
+import json
 
 
 # Create your views here.
@@ -13,11 +14,13 @@ def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set'})
     return response
 
+
 def signup(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
+        data = json.loads(request.body)
+        username = data.get('username', '')
+        password = data.get('password', '')
+        email = data.get('email', '')
         user = User.objects.create_user(username, email, password)
         user.save()
         user = authenticate(username=username, password=password)
@@ -26,13 +29,13 @@ def signup(request):
     return JsonResponse({'error': 'Invalid request method'})
 
 
-
 @csrf_exempt
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        user = authenticate(request, email=email, password=password)
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             return JsonResponse({'message': 'Logged in successfully'})
