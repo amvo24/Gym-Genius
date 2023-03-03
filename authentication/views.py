@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
@@ -48,9 +48,7 @@ def login_view(request):
 # def logout_view(request):
 #     logout(request)
 #     return JsonResponse({'success': 'User logged out'})
-
-# @login_required
-@csrf_exempt
+@login_required
 def logout_view(request):
     logout(request)
-    return JsonResponse({'success': 'User logged out'}, status=200)
+    return HttpResponse('User logged out successfully', status=200)
