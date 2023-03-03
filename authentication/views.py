@@ -44,7 +44,13 @@ def login_view(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-@login_required
+# @login_required
+# def logout_view(request):
+#     logout(request)
+#     return JsonResponse({'success': 'User logged out'})
+
+# @login_required
+@csrf_exempt
 def logout_view(request):
     logout(request)
-    return JsonResponse({'success': 'User logged out'})
+    return JsonResponse({'success': 'User logged out'}, status=200)

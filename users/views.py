@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from .models import User
 import json
 
@@ -49,6 +50,22 @@ def get_user(request, user_id):
             'DOB': user.dob,
             'age': user.age}
     return JsonResponse({'user':data})
+
+
+# Gets current user
+def get_current_user(request):
+    user = request.user
+    if user.is_authenticated:
+        data = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'message': 'No current user'}, status=401)
 
 # Update a user
 @csrf_exempt
