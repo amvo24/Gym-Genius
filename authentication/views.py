@@ -18,10 +18,14 @@ def get_csrf(request):
 def signup(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = data.get('username', '')
-        password = data.get('password', '')
-        email = data.get('email', '')
-        user = User.objects.create_user(username, email, password)
+        username = data.get('username')
+        password = data.get('password')
+        email = data.get('email')
+        first_name = data.get('firstName')
+        last_name = data.get('lastName')
+        # user = User.objects.create_user(username, email, password, first_name, last_name)
+        user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+
         user.save()
         user = authenticate(username=username, password=password)
         login(request, user)
@@ -44,10 +48,7 @@ def login_view(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-# @login_required
-# def logout_view(request):
-#     logout(request)
-#     return JsonResponse({'success': 'User logged out'})
+
 @login_required
 def logout_view(request):
     logout(request)
