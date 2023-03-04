@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+from users.models import UserProfile
 from exercises.models import Exercise, Muscle
 
 # Create your models here.
@@ -10,7 +10,7 @@ class Workout(models.Model):
     reps = models.IntegerField()
     exercises = models.ManyToManyField(Exercise, related_name='workouts')
     muscles_worked = models.ManyToManyField(Muscle, related_name='workouts')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
