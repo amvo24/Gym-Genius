@@ -13,13 +13,14 @@ import json
 @csrf_exempt
 def get_all_users(request):
     users = User.objects.all()
+    profile = UserProfile.objects.all()
     data = [{'firstName': user.first_name,
              'lastName': user.last_name,
              'username': user.username,
              'email': user.email,
-            #  'weight': user.weight,
-            #  'DOB': user.dob,
-            #  'age': user.age 
+            #  'weight': profile.weight,
+            #  'DOB': profile.DOB,
+            #  'age': profile.age ``
             }
              for user in users]
     return JsonResponse({'users': data})
@@ -27,14 +28,17 @@ def get_all_users(request):
 # Get a user
 @csrf_exempt
 def get_user(request, user_id):
-    user = UserProfile.objects.get(id=user_id)
+    user = User.objects.get(id=user_id)
+    profile = UserProfile.objects.get(user=user)
+    # profile, created = UserProfile.objects.get_or_create(user=user)
     data = {'firstName': user.first_name,
             'lastName': user.last_name,
             'username': user.username,
             'email': user.email,
-            'weight': user.weight,
-            'DOB': user.dob,
-            'age': user.age}
+            'weight': profile.weight,
+            'DOB': profile.dob,
+            'age': profile.age
+            }
     return JsonResponse({'user':data})
 
 

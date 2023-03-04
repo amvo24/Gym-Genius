@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-# AUTH_USER_MODEL = 'users.UserProfile'
+# AUTH_USER_MODEL = 'profile.UserProfile'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
+    'profiles',
     'workouts',
     'exercises',
     'authentication',
