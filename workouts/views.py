@@ -6,7 +6,7 @@ import json
 
 # Create your views here.
 
-# Creates a workout
+# Creates a workout compliled of several exercises
 @csrf_exempt
 def create_workout(request):
     if request.method == 'POST':
@@ -16,7 +16,7 @@ def create_workout(request):
         sets = data.get('sets')
         reps = data.get('reps')
         exercises = data.get('exercises')
-        workout = Workout.objects.create(name=name, description=description, sets=sets, reps=reps)
+        workout = Workout.objects.create( name=name, description=description, sets=sets, reps=reps)
         workout.exercises.set(exercises)
         return JsonResponse({'status': 'success'})
     else:

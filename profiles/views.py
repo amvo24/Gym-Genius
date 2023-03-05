@@ -67,19 +67,23 @@ def update_user(request, user_id):
         username = data.get('username')
         email = data.get('email')
         weight = data.get('weight')
-        dob = data.get('DOB')
+        dob = data.get('dob')
         age = data.get('age')
 
-        user = UserProfile.objects.get(id=user_id)
+        user = User.objects.get(id=user_id)
+        profile = UserProfile.objects.get(id=user_id)
+
         user.first_name = first_name
         user.last_name = last_name
         user.username = username
         user.email = email
-        user.weight = weight
-        user.dob = dob
-        user.age = age
+        profile.weight = weight
+        profile.dob = dob
+        profile.age = age
 
         user.save()
+        profile.save()
+        
         return JsonResponse({'status': 'success'})
     else:
         return JsonResponse({'status': 'error'})
@@ -88,8 +92,10 @@ def update_user(request, user_id):
 @csrf_exempt
 def delete_user(request, user_id):
     if request.method == 'DELETE':
-        user = UserProfile.objects.get(id=user_id)
+        user = User.objects.get(id=user_id)
+        profile = UserProfile.objects.get(id=user_id)
         user.delete()
+        profile.delete()
         return JsonResponse({'status': 'success'})
     else:
         return JsonResponse({'status': 'error'})
